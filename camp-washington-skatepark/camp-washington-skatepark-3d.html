@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Camp Washington Skatepark – L-2 3D Site Massing</title>
+<script>if (location.search.indexOf('embed') > -1) document.documentElement.setAttribute('data-embed', '');</script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.184.0/build/three.module.js",
+    "three/addons/controls/OrbitControls.js": "https://unpkg.com/three@0.184.0/examples/jsm/controls/OrbitControls.js",
+    "three/addons/exporters/OBJExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js",
+    "three/addons/exporters/GLTFExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js"
+  },
+  "integrity": {
+    "https://unpkg.com/three@0.184.0/build/three.module.js": "sha384-8FCZ1eVO6it4+pbec2aDtnTrwjWXZLJRC+MAGCIPDgsYnUrl/E0A2YlF8ioMKI/J",
+    "https://unpkg.com/three@0.184.0/build/three.core.js": "sha384-dw2ooPewaEIrAgl6oFDBmmBWCE9oW9LxRGcfwZ0hLvEprzo202wXl7vCYHRlSnOT",
+    "https://unpkg.com/three@0.184.0/examples/jsm/controls/OrbitControls.js": "sha384-4rziNxOBZKQ69i+w+f89KJ55TCYquwchVbByQwmaOeIOXdOU2PLDn3kOfXHwIJC9",
+    "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js": "sha384-nbwtoZENJD3Vq+ACK0CuGQdPMuDWHkamC2KJD70EV5nfg6jQjfppKOea07YJN+N3",
+    "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js": "sha384-VofkvpG6HERhFCYbsUOHeNXBCqID2nfqkQqnVzE1jc/oPcz+qJ13ADdXH08hE+cQ"
+  }
+}
+</script>
+<style>
+  html,body{margin:0;height:100%;background:#E6E9EE;font-family:Arial,Helvetica,sans-serif;color:#2B2F36}
+  a{color:#212D62}a:hover{color:#C3202F}
+  three-d-stage{height:calc(100vh - 100px)}
+  html[data-embed] .chrome{display:none !important}
+  html[data-embed] three-d-stage{height:100vh}
+  .tab{font:700 10px/1 Arial,Helvetica,sans-serif;letter-spacing:1.2px;text-transform:uppercase;text-decoration:none;color:#6B7280;padding:0 2px 6px;border-bottom:2px solid transparent;white-space:nowrap}
+  .tab[data-on]{color:#212D62;border-bottom-color:#C3202F}
+  .btn{font:700 10px/1 Arial,Helvetica,sans-serif;letter-spacing:1px;text-transform:uppercase;border:1px solid #212D62;background:#FFFFFF;color:#212D62;padding:6px 10px;cursor:pointer;white-space:nowrap}
+  .btn[data-on="true"]{background:#212D62;color:#FFFFFF}
+</style>
+</head>
+<body>
+<div class="chrome" style="height:8px;background:#212D62"></div>
+<header class="chrome" style="height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:#FFFFFF;border-bottom:1px solid #D5D9DF">
+  <div style="display:flex;align-items:center;gap:16px">
+    <img src="assets/crc-logo-horizontal.png" alt="Cincinnati Recreation Commission" style="height:28px;display:block">
+    <div style="width:1px;height:28px;background:#D5D9DF"></div>
+    <div>
+      <div style="font-size:14px;font-weight:700;color:#212D62;line-height:1.1;letter-spacing:.2px">Camp Washington Skatepark</div>
+      <div style="font-size:10px;color:#6B7280;margin-top:3px;letter-spacing:.6px;text-transform:uppercase">L-2 · 3D Site Massing Model</div>
+    </div>
+  </div>
+  <nav style="display:flex;gap:22px;align-items:flex-end;height:100%;padding-top:22px">
+    <a class="tab" href="Camp%20Washington%20Skatepark%20Plan.dc.html">L-1 Site Plan</a>
+    <a class="tab" data-on href="#">L-2 3D Massing</a>
+    <a class="tab" href="Camp%20Washington%20Skatepark%20Axon.html">L-3 Exploded Axon</a>
+  </nav>
+</header>
+<div class="chrome" style="height:34px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 24px;font-size:10.5px;color:#4B5563;background:#F3F5F7;border-bottom:1px solid #D5D9DF">
+  <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Drag to orbit · scroll to zoom · right-drag to pan. Massing from the L-1 plan geometry and Aug 2026 photos; heights and transitions estimated — not for construction.</span>
+  <button class="btn" id="btn-axon">Exploded axon</button>
+</div>
+<div style="position:relative;isolation:isolate">
+  <div id="hud" style="z-index:2;position:absolute;left:16px;bottom:16px;display:flex;align-items:flex-end;gap:14px;padding:9px 12px;background:rgba(255,255,255,.92);border:1px solid #D5D9DF;box-shadow:0 2px 10px rgba(20,30,60,.12);pointer-events:none;font:700 9px/1 Arial,Helvetica,sans-serif;color:#2B2F36;letter-spacing:.8px">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:3px"><svg id="hud-north" width="30" height="30" viewBox="-15 -15 30 30"><circle r="13.5" fill="none" stroke="#9AA0A8" stroke-width="1"></circle><g id="hud-needle"><polygon points="0,-12 5,4 0,1 -5,4" fill="#212D62"></polygon><polygon points="0,12 5,4 0,1 -5,4" fill="#C9CED6"></polygon></g></svg><span>N</span></div>
+    <div style="display:flex;flex-direction:column;gap:4px"><div id="hud-bar" style="display:flex;height:6px;border:1px solid #2B2F36;width:100px"><div style="flex:1;background:#2B2F36"></div><div style="flex:1;background:#FFFFFF"></div><div style="flex:2;background:#2B2F36"></div></div><div style="display:flex;justify-content:space-between;width:100%"><span>0</span><span id="hud-len">25 FT</span></div></div>
+  </div>
+  <div style="z-index:2;position:absolute;left:16px;top:16px;width:212px;background:#FFFFFF;border:1px solid #D5D9DF;box-shadow:0 2px 10px rgba(20,30,60,.12)">
+    <div style="background:#212D62;color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:1.2px;padding:5px 9px">PLAN KEY</div>
+    <div id="key" style="padding:7px 9px;display:flex;flex-direction:column;gap:4px;font-size:10px;color:#2B2F36;line-height:1.25"></div>
+  </div>
+  <div id="blowouts-panel" style="z-index:2;display:none;position:absolute;right:16px;top:16px;width:212px;max-height:calc(100% - 32px);flex-direction:column;background:#FFFFFF;border:1px solid #D5D9DF;box-shadow:0 2px 10px rgba(20,30,60,.12)">
+    <div style="background:#212D62;color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:1.2px;padding:5px 9px;flex-shrink:0">DETAIL BLOW-OUTS</div>
+    <div id="blowouts" style="padding:8px;display:flex;flex-direction:column;gap:8px;overflow:auto;min-height:0"></div>
+  </div>
+  <three-d-stage name="camp-washington-skatepark" background="#E6E9EE" autorotate></three-d-stage>
+</div>
+<script src="three-d-stage.js?v=muoskcie"></script>
+<script type="module" src="skatepark-model.js?v=nov26b"></script>
+</body>
+</html>
